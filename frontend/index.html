@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAG Explorer</title>
+  <link rel="stylesheet" href="/static/style.css?v=3">
+</head>
+<body>
+  <header class="hero">
+    <div class="eyebrow">LOCAL RAG LAB / EMBEDDING EXPLORER</div>
+    <h1>See meaning become searchable.</h1>
+    <p>Trace a document from raw text to ranked vector retrieval, one visible step at a time.</p>
+  </header>
+
+  <nav class="pipeline" aria-label="RAG pipeline">
+    <span>Document</span><b>→</b><span>Extract</span><b>→</b><span>Chunk</span><b>→</b><span>Embed</span><b>→</b><span>Index</span><b>→</b><span>Search</span>
+  </nav>
+
+  <main>
+    <section class="panel upload-panel">
+      <div class="section-heading"><span class="step">01</span><div><h2>Bring in a document</h2><p>PDF, Word, or spreadsheet. You can also work with pasted text below.</p></div></div>
+      <label class="dropzone" for="file-input"><strong>Choose a document</strong><span>PDF · DOCX · XLSX · XLS</span><input id="file-input" type="file" accept=".pdf,.docx,.xlsx,.xls"></label>
+      <div id="file-meta" class="meta-grid empty-state">No document loaded yet.</div>
+      <div class="manual-input"><label for="manual-text">Or paste learning text</label><textarea id="manual-text" rows="5" placeholder="Paste a policy, article, or a few sentences here..."></textarea><button id="use-text">Use pasted text</button></div>
+    </section>
+
+    <section class="panel hidden" id="extracted-panel"><div class="section-heading"><span class="step">02</span><div><h2>What was extracted?</h2><p id="classification"></p></div></div><h3>Readable text</h3><pre id="extracted-text" class="document-text"></pre><details class="json-view"><summary>See the extracted data as JSON</summary><pre id="extracted-json" class="document-text"></pre></details></section>
+
+    <section class="panel hidden" id="chunk-panel"><div class="section-heading"><span class="step">03</span><div><h2>Organize the document</h2><p>The app detects the document structure and groups related content automatically.</p></div></div><div class="auto-chunk"><strong>Automatic document chunking</strong><span>Tables and numbered sections stay together. Narrative text is grouped when its meaning changes.</span></div><button id="chunk-button">Organize document</button><p class="hint">No chunk size or overlap settings are needed. The document's own structure guides the result.</p><div id="chunk-summary"></div><div id="chunks" class="chunk-list"></div></section>
+
+    <section class="panel hidden" id="embedding-panel"><div class="section-heading"><span class="step">04</span><div><h2>Give every chunk a vector</h2><p>Using the real <code>all-MiniLM-L6-v2</code> model. Dimensions are measured from the returned vector.</p></div></div><button id="embed-button">Generate chunk embeddings</button><button id="index-button" class="secondary hidden">Index vectors for search</button><div id="embedding-status"></div></section>
+
+    <section class="panel hidden" id="query-panel"><div class="section-heading"><span class="step">06</span><div><h2>Ask the document</h2><p>The LLM answers your question using the retrieved document context.</p></div></div><div class="query-row"><input id="query" placeholder="What is the remote work policy?"><select id="method"><option value="cosine">Cosine similarity — angle</option><option value="dot">Dot product — alignment and size</option><option value="euclidean">Euclidean distance — straight-line gap</option></select><select id="top-k"><option>3</option></select><button id="search-button">Ask the LLM</button></div><p class="hint">The answer is generated from the document. The three supporting chunks appear below it.</p><div id="query-vector"></div><div id="answer" class="answer"></div><div id="performance" class="performance"></div><div id="results"></div></section>
+  </main>
+  <div id="toast" role="status"></div>
+  <script src="/static/app.js?v=7"></script>
+</body>
+</html>

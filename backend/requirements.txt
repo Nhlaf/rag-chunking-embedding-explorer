@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pypdf
+python-docx
+openpyxl
+xlrd
+sentence-transformers
+numpy
+psutil
+pydantic
+pytest
+httpx
+pymongo
+python-dotenv
