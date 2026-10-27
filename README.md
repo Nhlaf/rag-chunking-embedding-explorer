@@ -133,7 +133,7 @@ The API response is JSON. For example, after extraction the document has this sh
 }
 ```
 
-After embedding, each chunk also contains an `embedding` array. When MongoDB is configured, the same document JSON is saved in the `rag_explorer.documents` collection.
+After embedding, each chunk also contains an `embedding` array.
 
 When `MONGODB_URI` is configured, document JSON is saved in the `rag_explorer.documents` collection. Vector search currently uses an in-memory index; MongoDB is used for document persistence, not vector search.
 
@@ -151,7 +151,7 @@ The application uses Groq with a Qwen model for answer generation. Set your Groq
 
 ```powershell
 $env:GROQ_API_KEY = "your_groq_api_key"
-$env:GROQ_MODEL = "qwen/qwen3-32b"
+$env:GROQ_MODEL = "qwen/qwen3.6-27b"
 ```
 
 The backend sends Groq only the retrieved chunks and tells Qwen to refuse unsupported questions. If the similarity score is too weak, the backend refuses before calling Groq. The embedding model remains local and is independent of the answer-generation provider.
